@@ -3,7 +3,9 @@
 namespace App\Events;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
+use App\Entity\Ludi;
 use App\Entity\User;
+use App\Repository\LudiRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
@@ -14,11 +16,13 @@ class UserSubscribed implements EventSubscriberInterface
 {
     private $encoder;
     private $repository;
+    private $ludi;
 
-    public function __construct(UserPasswordHasherInterface $encoder, UserRepository $repository)
+    public function __construct(UserPasswordHasherInterface $encoder, UserRepository $repository, LudiRepository $ludi)
     {
         $this->encoder = $encoder;
         $this->repository = $repository;
+        $this->ludi = $ludi;
     }
 
     public static function getSubscribedEvents()
@@ -42,6 +46,7 @@ class UserSubscribed implements EventSubscriberInterface
                 $user->setRoles(["ROLE_ADMIN"]);
             }
             $user->setBourse(10);
+
         }
 
         if($user instanceof User && $method === "PUT"){
