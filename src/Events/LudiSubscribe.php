@@ -34,10 +34,10 @@ class LudiSubscribe implements EventSubscriberInterface{
         $ludi = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
 
-        $user = $this->security->getUser();
-        $rest = $user->getBourse() - 60 ;
 
         if($ludi instanceof Ludi && $method === "POST"){
+            $user = $this->security->getUser();
+            $rest = $user->getBourse() - 60 ;
             $ludis = $this->repository->findBy(["user" => $user]);
             $ludi->setComplet(false)
                ->setUser($user);

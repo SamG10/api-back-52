@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Repository\LudiRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -49,6 +50,7 @@ class Ludi
 
     /**
      * @ORM\OneToMany(targetEntity=Gladiateur::class, mappedBy="ludi", orphanRemoval=true)
+     * @ApiSubresource()
      */
     private $gladiateurs;
 
